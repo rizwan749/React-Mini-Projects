@@ -8,6 +8,9 @@ import TestPractice from './Components/Day2/TestPractice'
 import PracticeTwo from './Components/Day2/TestPracticeTwo'
 import ActivityTracker from './Components/Day2/ActivityTracker'
 import PhoneSystem from './Components/Day2/PhoneSystemRepair'
+import InputTake from './Components/Day3/InputTake'
+import UserProfileCard from './Components/Day3/UserProfileCard'
+import UserFeedbackForm from './Components/Day3/User Feedback Form'
 
 // folder renamed and files are updated
 
@@ -35,8 +38,13 @@ function App() {
       <PracticeTwo />
       
       */}
-      <ActivityTracker />
-      <PhoneSystem />
+      {/* <ActivityTracker />
+      <PhoneSystem /> */}
+
+        {/* <InputTake /> */}
+      
+      {/* <UserProfileCard /> */}
+      <UserFeedbackForm />
 
     </div>
   )
