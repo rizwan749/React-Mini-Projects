@@ -11,6 +11,7 @@ import PhoneSystem from './Components/Day2/PhoneSystemRepair'
 import InputTake from './Components/Day3/InputTake'
 import UserProfileCard from './Components/Day3/UserProfileCard'
 import UserFeedbackForm from './Components/Day3/User Feedback Form'
+import PracticeProject from './Components/3DaysGrandProject/PracticeProject'
 
 // folder renamed and files are updated
 
@@ -44,7 +45,9 @@ function App() {
         {/* <InputTake /> */}
       
       {/* <UserProfileCard /> */}
-      <UserFeedbackForm />
+      {/* <UserFeedbackForm /> */}
+
+      <PracticeProject />
 
     </div>
   )
