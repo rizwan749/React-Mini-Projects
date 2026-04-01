@@ -5,17 +5,21 @@ import './UserList.css';
 const UserList = () =>{
     const [users,setUsers] = useState([])
     const [limit,setLimit] = useState(5)
+    const [loading,setLoading] = useState(true)
 
     useEffect(() => {
        const fetchUser = async () => {
         try {
-            let response = await fetch(`https://jsonplaceholder.typicode.com/users?_Limit=${limit}`)
+            setLoading(true)
+            let response = await fetch(`https://jsonplaceholder.typicode.com/users?_limit=${limit}`)
 
             let data = await response.json()
 
             setUsers(data)
         } catch (error) {
             alert(`There is an error while fetching data ${error}`)
+        }finally{
+            setLoading(false)
         }
        }
 
@@ -30,14 +34,20 @@ const UserList = () =>{
                 <button onClick={ () => setLimit(5)} style={btnStyle} >Show 5</button>
                 <button onClick={ () => setLimit(10)} style={btnStyle} >Show 10</button>
             </div>
-            <div className="user-grid" >
-                {users.map((user) => (
-                    <div className="user-card" key={user.id} >
-                        <h3 className="user-name" > {user.name} </h3>
-                        <p className="user-email" > {user.email} </p>
-                    </div>
-                ))}
-            </div>
+            {loading ? (
+                <div style={{ textAlign: "center", fontSize: "1.5rem", color: "#3b82f6" }}>
+                    <b>⏳ Data is loading...</b>
+                </div>
+            ) : (
+                <div className="user-grid">
+                    {users.map((user) => (
+                        <div className="user-card" key={user.id}>
+                            <h3 className="user-name"> {user.name} </h3>
+                            <p className="user-email"> {user.email} </p>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
