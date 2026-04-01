@@ -1,0 +1,32 @@
+.clock-container{
+    display: flex;
+    justify-content: center;
+    height: 90vh;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #1e293b;
+    font-family: sans-serif;
+}
+
+.clock-box{
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border: 2px solid lightgray;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.clock-title{
+    color: #cbd5e1;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.clock-time{
+    color: white;
+    font-size: 4rem;
+    font-weight: bold;
+}

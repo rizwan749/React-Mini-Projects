@@ -1,0 +1,57 @@
+import React,{useState,useEffect} from "react";
+import './UserList.css';
+
+
+const UserList = () =>{
+    const [users,setUsers] = useState([])
+    const [limit,setLimit] = useState(5)
+
+    useEffect(() => {
+       const fetchUser = async () => {
+        try {
+            let response = await fetch(`https://jsonplaceholder.typicode.com/users?_Limit=${limit}`)
+
+            let data = await response.json()
+
+            setUsers(data)
+        } catch (error) {
+            alert(`There is an error while fetching data ${error}`)
+        }
+       }
+
+       fetchUser()
+    },[limit])
+
+    return (
+        <div className="user-container" >
+            <h2 className="title" >User Directory</h2>
+            <div style={{textAlign:"center",marginBottom:"10px"}} >
+                <button onClick={ () => setLimit(3)} style={btnStyle} >Show 3</button>
+                <button onClick={ () => setLimit(5)} style={btnStyle} >Show 5</button>
+                <button onClick={ () => setLimit(10)} style={btnStyle} >Show 10</button>
+            </div>
+            <div className="user-grid" >
+                {users.map((user) => (
+                    <div className="user-card" key={user.id} >
+                        <h3 className="user-name" > {user.name} </h3>
+                        <p className="user-email" > {user.email} </p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+
+
+const btnStyle = {
+    padding: "10px 20px",
+    margin: "0 10px",
+    backgroundColor: "#3b82f6",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontWeight: "bold"
+};
+export default UserList

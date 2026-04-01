@@ -12,6 +12,9 @@ import InputTake from './Components/Day3/InputTake'
 import UserProfileCard from './Components/Day3/UserProfileCard'
 import UserFeedbackForm from './Components/Day3/User Feedback Form'
 import PracticeProject from './Components/3DaysGrandProject/PracticeProject'
+import LiveClock from './Components/Day4/Day4UseEffect'
+import WindowSizeTracker from './Components/Day4/WindowSizeTracker'
+import UserList from './Components/Day4/UserList'
 
 // folder renamed and files are updated
 
@@ -47,8 +50,14 @@ function App() {
       {/* <UserProfileCard /> */}
       {/* <UserFeedbackForm /> */}
 
-      <PracticeProject />
+      {/* <PracticeProject /> */}
 
+      {/* <LiveClock /> */}
+
+        {/* <WindowSizeTracker /> */}
+
+      <UserList />
+      
     </div>
   )
 }
