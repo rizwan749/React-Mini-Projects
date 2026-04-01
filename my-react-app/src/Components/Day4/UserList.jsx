@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from "react";
+import axios from "axios";
 import './UserList.css';
 
 
@@ -11,11 +12,9 @@ const UserList = () =>{
        const fetchUser = async () => {
         try {
             setLoading(true)
-            let response = await fetch(`https://jsonplaceholder.typicode.com/users?_limit=${limit}`)
+            let response = await axios.get(`https://jsonplaceholder.typicode.com/users?_limit=${limit}`)
 
-            let data = await response.json()
-
-            setUsers(data)
+            setUsers(response.data)
         } catch (error) {
             alert(`There is an error while fetching data ${error}`)
         }finally{
