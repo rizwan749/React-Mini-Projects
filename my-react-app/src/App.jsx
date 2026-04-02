@@ -15,6 +15,8 @@ import PracticeProject from './Components/3DaysGrandProject/PracticeProject'
 import LiveClock from './Components/Day4/Day4UseEffect'
 import WindowSizeTracker from './Components/Day4/WindowSizeTracker'
 import UserList from './Components/Day4/UserList'
+import SmartToggle from './Components/Day6/SmartToggle'
+import TodoApp from './Components/Day6/TodoApp'
 
 // folder renamed and files are updated
 
@@ -56,7 +58,11 @@ function App() {
 
         {/* <WindowSizeTracker /> */}
 
-      <UserList />
+      {/* <UserList /> */}
+
+      {/* <SmartToggle /> */}
+
+      <TodoApp />
       
     </div>
   )

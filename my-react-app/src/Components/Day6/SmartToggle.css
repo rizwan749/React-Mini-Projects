@@ -1,0 +1,13 @@
+/* Normal (Light) Body */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease; /* Yeh color change ko smooth banayega */
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+/* Dark mode wali VIP class */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
