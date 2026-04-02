@@ -17,6 +17,7 @@ import WindowSizeTracker from './Components/Day4/WindowSizeTracker'
 import UserList from './Components/Day4/UserList'
 import SmartToggle from './Components/Day6/SmartToggle'
 import TodoApp from './Components/Day6/TodoApp'
+import Dashboard from './Components/Day6/Dashboard'
 
 // folder renamed and files are updated
 
@@ -63,6 +64,8 @@ function App() {
       {/* <SmartToggle /> */}
 
       <TodoApp />
+
+      <Dashboard />
       
     </div>
   )

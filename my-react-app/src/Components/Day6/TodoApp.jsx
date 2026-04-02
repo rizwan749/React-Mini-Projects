@@ -3,7 +3,7 @@ import TodoItem from "./TodoItem";
 import './TodoApp.css';
 
 const TodoApp = () => {
-    const [todo,setTodos] = useState(["","",""])
+    const [todo,setTodos] = useState([])
     const [isDark,setIsDark] = useState(false)
     const [newTask,setNewTask] = useState("")
 
