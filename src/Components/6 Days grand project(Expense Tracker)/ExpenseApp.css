@@ -1,0 +1,151 @@
+/* Poore page ka background */
+body {
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hamari app ka main box */
+.app-container {
+    max-width: 450px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.header-title {
+    text-align: center;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Grand Total wala box */
+.total-box {
+    background: linear-gradient(135deg, #00b09b, #96c93d);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 176, 155, 0.3);
+}
+
+.total-box h4 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Inputs wala section */
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+}
+
+.input-field {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-field:focus {
+    border-color: #00b09b;
+}
+
+.name-input {
+    flex: 2; /* Naam wala box lamba hoga */
+}
+
+.amount-input {
+    flex: 1; /* Amount wala box chota hoga */
+}
+
+.add-btn {
+    background-color: #1a1a1a;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.add-btn:hover {
+    background-color: #333333;
+}
+
+.add-btn:active {
+    transform: scale(0.98);
+}
+
+/* --- Beta (ExpenseItem) Ki Styling --- */
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9fafb;
+    padding: 15px 20px;
+    border-left: 5px solid #00b09b;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.expense-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.expense-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.expense-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.expense-amount {
+    font-size: 16px;
+    color: #00b09b;
+    font-weight: bold;
+    background-color: #e6f7f5;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.delete-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
+}
