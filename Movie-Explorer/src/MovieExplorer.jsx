@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const MovieExplorer = () => {
-  // ==========================================
+  
   // 1. CONSTANTS & STATE VARIABLES
-  // ==========================================
-  const APIKey = "337ff2f8a19d0cb23c79a1f5e31e1f52";
+  
+  const APIKey = import.meta.env.VITE_TMDB_API_KEY;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [displayMovie, setDisplayMovie] = useState([]); // Default state ab khali array hai
   const [lastSearch, setLastSearch] = useState("");
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [providers, setProviders] = useState([]);
 
-  // ==========================================
+  
   // 2. SEARCH MOVIE LOGIC (USER INPUT)
-  // ==========================================
+  
   const handleSearch = async () => {
     // GUARD CLAUSE: Agar box khali hai, toh API call mat karo
     if (searchTerm === "") {
@@ -46,7 +48,49 @@ const MovieExplorer = () => {
     };
 
     fetchTrendingMovies();
-  }, []); // Khali array ka matlab hai yeh sirf ek baar chalega
+  }, []); 
+
+  //Movie platform provider
+// ==========================================
+  // 3.5 FETCH WATCH PROVIDERS (NETFLIX, AMAZON ETC)
+  // ==========================================
+  useEffect(() => {
+    const fetchProviders = async () => {
+      // Agar popup band hai toh API call mat bhejo
+      if (!selectedMovie) return; 
+      
+      try {
+        const providerURL = `https://api.themoviedb.org/3/movie/${selectedMovie.id}/watch/providers?api_key=${APIKey}`;
+        const response = await fetch(providerURL);
+        const data = await response.json();
+        
+        // Agar US (America) ka data mojood hai
+        if (data.results && data.results.US) {
+          const usData = data.results.US;
+          let allProviders = [];
+          
+          // Streaming, Rent, aur Buy teeno ka data jama karo
+          if (usData.flatrate) allProviders = [...allProviders, ...usData.flatrate];
+          if (usData.rent) allProviders = [...allProviders, ...usData.rent];
+          if (usData.buy) allProviders = [...allProviders, ...usData.buy];
+          
+          // Duplicate logos hatane ke liye (Kyunke kuch platform rent aur buy dono detey hain)
+          const uniqueProviders = allProviders.filter((v, i, a) => 
+            a.findIndex(v2 => (v2.provider_id === v.provider_id)) === i
+          );
+
+          setProviders(uniqueProviders);
+        } else {
+          setProviders([]); // Agar koi provider na mile toh khali kar do
+        }
+      } catch (error) {
+        console.error("Error fetching providers:", error);
+        setProviders([]);
+      }
+    };
+
+    fetchProviders();
+  }, [selectedMovie]); // Jab bhi movie change hogi, yeh chalega
 
   // ==========================================
   // 4. MAIN UI RENDERING
@@ -124,6 +168,7 @@ const MovieExplorer = () => {
           {displayMovie.map((movie) => (
             <div
               key={movie.id}
+              onClick={() => setSelectedMovie(movie)}
               className="bg-[#181818] rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform duration-300 shadow-xl"
             >
               <img
@@ -166,7 +211,90 @@ const MovieExplorer = () => {
         </div>
         
       )}
+      {/* ==========================================
+          6. MOVIE DETAILS MODAL (POPUP)
+          ========================================== */}
+      {selectedMovie && (
+        
+        // Dark Backdrop
+        <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50 p-4">
+          
+          {/* Main Modal Box (Width set to 4xl, added padding and gap) */}
+          <div className="bg-[#181818] rounded-2xl max-w-4xl w-full relative flex flex-col md:flex-row shadow-2xl border border-gray-800 p-4 md:p-8 gap-6 md:gap-8 items-start">
+            
+            {/* Close Button (X) */}
+            <button 
+              onClick={() => setSelectedMovie(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-4xl font-bold z-10 transition-colors"
+            >
+              &times;
+            </button>
+
+            {/* Left Side: Movie Poster (Ab image ek khoobsurat box mein hai) */}
+            <div className="w-full md:w-1/3 flex-shrink-0">
+              <img 
+                src={
+                  selectedMovie.poster_path 
+                    ? `https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}` 
+                    : "https://placehold.co/500x750/333333/FFFFFF?text=No+Poster"
+                } 
+                alt={selectedMovie.title}
+                className="w-full h-auto rounded-xl object-cover shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+              />
+            </div>
+
+            {/* Right Side: Movie Details (Double text khatam kar diya) */}
+            <div className="w-full md:w-2/3 flex flex-col justify-start pt-2">
+              
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">{selectedMovie.title}</h2>
+              
+              <div className="flex gap-4 items-center mb-6 text-sm text-gray-400">
+                <p className="bg-gray-800 px-3 py-1 rounded-full font-medium shadow-inner">
+                  {selectedMovie.release_date ? selectedMovie.release_date.split("-")[0] : "N/A"}
+                </p>
+                <p className="bg-yellow-600/20 text-yellow-500 px-3 py-1 rounded-full border border-yellow-600/50 font-medium">
+                  ⭐ {selectedMovie.vote_average ? selectedMovie.vote_average.toFixed(1) : "NR"} / 10
+                </p>
+              </div>
+              
+              <h3 className="text-white font-semibold mb-2 text-lg">Overview:</h3>
+              
+              {/* Scrollbar hide karne ka jadu Tailwind ki hidden classes ke zariye */}
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed overflow-y-auto max-h-48 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                {selectedMovie.overview ? selectedMovie.overview : "No description available for this movie."}
+              </p>
+
+              {/* WHERE TO WATCH SECTION */}
+              <div className="mt-8 pt-6 border-t border-gray-800 w-full">
+                <h3 className="text-white font-semibold mb-4 text-lg">Available On:</h3>
+                <div className="flex gap-4 flex-wrap">
+                  {providers?.length > 0 ? (
+                    providers.map((provider) => (
+                      <div key={provider.provider_id} className="flex flex-col items-center gap-2">
+                        <img 
+                          src={`https://image.tmdb.org/t/p/w200${provider.logo_path}`} 
+                          alt={provider.provider_name}
+                          className="w-12 h-12 rounded-xl shadow-md object-cover transition-transform hover:scale-110"
+                          title={provider.provider_name}
+                        />
+                        <span className="text-gray-400 text-[11px] text-center max-w-[60px] truncate">
+                          {provider.provider_name}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-gray-500 text-sm italic">Not available on standard streaming yet.</p>
+                  )}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
+    
   );
 };
 
