@@ -1,0 +1,22 @@
+
+
+
+/* src/index.css */
+:root {
+  --primary-color: #1e293b;   
+  --accent-color: #f97316;   
+  --bg-soft-color: #f8fafc;   
+}
+
+body {
+  background-color: var(--bg-soft-color);
+  color: var(--primary-color);
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.bg-primary { background-color: var(--primary-color); }
+.text-accent { color: var(--accent-color); }
+.bg-soft { background-color: var(--bg-soft-color); }
+
+@import 'tailwindcss'
